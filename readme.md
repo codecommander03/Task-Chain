@@ -14,9 +14,7 @@ TaskChain is a cutting-edge Web3 application designed to seamlessly connect indi
 ### Database:
 - Postgres
 - Neon
-
-### ORM:
-- Prisma
+- Prisma (ORM)
 
 ### Media Content Storage:
 - Amazon S3
