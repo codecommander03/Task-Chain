@@ -16,6 +16,9 @@ TaskChain is a cutting-edge Web3 application designed to seamlessly connect indi
 - Neon
 - Prisma (ORM)
 
+### Authentication:
+- Json Web Token (JWT)
+
 ### Media Content Storage:
 - Amazon S3
 - CloudFront
