@@ -25,3 +25,10 @@ TaskChain is a cutting-edge Web3 application designed to seamlessly connect indi
 
 ### Chain:
 - Solana
+
+
+## Steps:
+
+1. go to backend folder by running `cd backend`
+
+2. run `tsc -b` and then `node dist/index.js`
