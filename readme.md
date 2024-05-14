@@ -29,6 +29,10 @@ TaskChain is a cutting-edge Web3 application designed to seamlessly connect indi
 
 ## Steps:
 
-1. go to backend folder by running `cd backend`
+### Backend:
 
-2. run `tsc -b` and then `node dist/index.js`
+1. run `npm install` to install all the dependencies
+
+2. go to backend folder by running `cd backend`
+
+3. run `tsc -b` and then `node dist/index.js`
