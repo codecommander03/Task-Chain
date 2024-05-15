@@ -24,6 +24,7 @@ TaskChain is a cutting-edge Web3 application designed to seamlessly connect indi
 ### Media Content Storage:
 - Amazon S3
 - CloudFront
+- IAM (Identity and Access Management)
 
 ### Chain:
 - Solana
