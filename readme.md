@@ -10,11 +10,13 @@ TaskChain is a cutting-edge Web3 application designed to seamlessly connect indi
 ### Backend:
 - Node js
 - Express js
+- Zod (Schema Validation)
 
 ### Database:
 - Postgres
 - Neon
 - Prisma (ORM)
+- Zod (Schema Validation)
 
 ### Authentication:
 - Json Web Token (JWT)
