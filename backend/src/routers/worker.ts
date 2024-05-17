@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { TOTAL_DECIMALS, WORKER_JWT_SECRET } from "../config";
+import { WORKER_JWT_SECRET } from "../config";
 import { workerMiddleware } from "../middleware";
 import { getNextTask } from "../db";
 import { createSubmissionInput } from "../types";
@@ -11,6 +11,74 @@ const TOTAL_SUBMISSIONS = 100;
 const prismaClient = new PrismaClient();
 
 const router = Router();
+
+router.post("/payout", workerMiddleware, async (req, res) => {
+    //@ts-ignore
+    const userId:string = req.userId
+    const worker = await prismaClient.worker.findFirst({
+        where: {
+            id: Number(userId)
+        }
+    })
+
+    if (!worker) {
+        return res.status(403).json({
+            message: "User not found"
+        })
+    }
+    const address = worker?.address;
+
+    const txnId = "0x234567890";
+
+    // we should add a lock here
+    await prismaClient.$transaction(async tx => {
+        await tx.worker.update({
+            where: {
+                id: Number(userId)
+            },
+            data: {
+                pending_amount: {
+                    decrement: worker.pending_amount
+                },
+                locked_amount: {
+                    increment: worker.pending_amount
+                }
+            }
+        })
+
+        await tx.payouts.create({
+            data: {
+                user_id: Number(userId),
+                amount: worker.pending_amount,
+                status: "Processing",
+                signature: txnId
+            }
+        })
+    })
+
+    // send the txn to solana blockchain
+
+    res.json({
+        message: "Processing payout",
+        amount: worker.pending_amount
+    })
+})
+    
+router.get("/balance", workerMiddleware, async (req, res) => {
+    //@ts-ignore
+    const userId:string = req.userId;
+    const worker = await prismaClient.worker.findFirst({
+        where: {
+            id: Number(userId)
+        }
+    })
+
+    res.json({
+        pendingAmount: worker?.pending_amount,
+        lockedAmount: worker?.pending_amount
+    });
+})
+
 
 router.post("/submission", workerMiddleware, async (req, res) => {
     //@ts-ignore
@@ -29,7 +97,7 @@ router.post("/submission", workerMiddleware, async (req, res) => {
         let amount = (Number(task.amount) / TOTAL_SUBMISSIONS).toString();
 
         const submission = await prismaClient.$transaction(async tx => {
-            const submission = await prismaClient.submission.create({
+            const submission = await tx.submission.create({
                 data: {
                     option_id: Number(parsedBody.data.selection),
                     task_id: Number(parsedBody.data.taskId),
@@ -38,13 +106,13 @@ router.post("/submission", workerMiddleware, async (req, res) => {
                 }
             })
 
-            await prismaClient.worker.update({
+            await tx.worker.update({
                 where: {
                     id: userId
                 },
                 data: {
                     pending_amount: {
-                        increment: Number(amount) * TOTAL_DECIMALS
+                        increment: Number(amount)
                     }
                 }
             })
