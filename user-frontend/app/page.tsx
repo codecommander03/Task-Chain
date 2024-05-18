@@ -1,9 +1,12 @@
+import Appbar from "@/components/Appbar";
+import UploadImage from "@/components/UploadImage";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24"> 
-
+    <main className=""> 
+      <Appbar />
+      <UploadImage />
     </main>
   );
 }
