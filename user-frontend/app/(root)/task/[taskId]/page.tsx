@@ -40,7 +40,7 @@ export default function Page({params: {
             {taskDetails.title}
         </div>
         <div className='flex justify-center pt-8'>
-            {Object.keys(result || {}).map(taskId => <Task imageUrl={result[taskId].option.imageUrl} votes={result[taskId].count} />)}
+            {/* {Object.keys(result || {}).map(taskId => <Task imageUrl={result[taskId].option.imageUrl} votes={result[taskId].count} />)} */}
         </div>
     </div>
 }
