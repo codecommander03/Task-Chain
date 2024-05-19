@@ -1,12 +1,13 @@
-import Appbar from "@/components/Appbar";
-import UploadImage from "@/components/UploadImage";
-import Image from "next/image";
+import { Appbar } from "@/components/Appbar";
+import { Hero } from "@/components/Hero";
+import { Upload } from "@/components/Upload";
 
 export default function Home() {
   return (
     <main className=""> 
       <Appbar />
-      <UploadImage />
+      <Hero />
+      <Upload />
     </main>
   );
 }
