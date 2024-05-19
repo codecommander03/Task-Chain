@@ -7,8 +7,17 @@ import { getNextTask } from "../db";
 import { createSubmissionInput } from "../types";
 
 const TOTAL_SUBMISSIONS = 100;
-
 const prismaClient = new PrismaClient();
+
+prismaClient.$transaction(
+    async (prisma) => {
+      // Code running in a transaction...
+    },
+    {
+      maxWait: 5000, // default: 2000
+      timeout: 10000, // default: 5000
+    }
+)
 
 const router = Router();
 
@@ -127,7 +136,9 @@ router.post("/submission", workerMiddleware, async (req, res) => {
             amount
         })
     } else {
-
+        res.status(411).json({
+            message: "Incorrect inputs"
+        })
     }
 })
 
@@ -142,7 +153,7 @@ router.get("/nextTask", workerMiddleware, async (req, res) => {
             message: "No more tasks available for you to review"
         })
     } else {
-        return res.status(411).json({
+        return res.json({
             task
         })
     }
