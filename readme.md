@@ -11,6 +11,7 @@ TaskChain is a cutting-edge Web3 application designed to seamlessly connect indi
 - Node js
 - Express js
 - Zod (Schema Validation)
+- Axios
 
 ### Database:
 - Postgres
