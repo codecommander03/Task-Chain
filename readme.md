@@ -28,6 +28,7 @@ TaskChain is a cutting-edge Web3 application designed to seamlessly connect indi
 
 ### Chain:
 - Solana
+- [Solana Wallet Adapter](https://github.com/anza-xyz/wallet-adapter)
 
 
 ## Steps:
