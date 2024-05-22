@@ -1,3 +1,4 @@
+"use client";
 import { BACKEND_URL } from "@/utils";
 import axios from "axios";
 import next from "next";
